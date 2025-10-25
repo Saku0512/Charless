@@ -1,0 +1,62 @@
+#include "tokenizer.h"
+#include "vm.h"
+
+// --- 字句解析 (トークナイザ) ---
+
+// '20' セパレータを消費する
+// セパレータがあれば 1 を、なければ 0 を返す
+int consume_separator() {
+    if (strncmp(ip, "20", 2) == 0) {
+        ip += 2; // ポインタを2文字進める
+        return 1;
+    }
+    return 0;
+}
+
+// '99' の後の数値リテラルを読み込む
+// (仕様 4. に基づく)
+long get_number_literal() {
+    char buffer[64]; // 数値を一時的に格納
+    int i = 0;
+
+    // '20' が来るまで数字を読み込む
+    while (*ip != '\0' && strncmp(ip, "20", 2) != 0) {
+        if (!isdigit(*ip)) {
+            fprintf(stderr, "Error: Expected digit in number literal, but got '%c'\n", *ip);
+            exit(1);
+        }
+        buffer[i++] = *ip;
+        ip++;
+    }
+    buffer[i] = '\0';
+
+    // 末尾の '20' を消費する
+    if (!consume_separator()) {
+        fprintf(stderr, "Error: Expected '20' after number literal\n");
+        exit(1);
+    }
+
+    return atol(buffer); // C言語の long 型に変換
+}
+
+// 命令トークンを読み込む
+// (仕様 3. に基づく)
+long get_opcode() {
+    char buffer[64];
+    int i = 0;
+
+    // '20' か '99' か終端が来るまで読み込む
+    while (*ip != '\0' && strncmp(ip, "20", 2) != 0 && strncmp(ip, "99", 2) != 0) {
+        if (!isdigit(*ip)) {
+            fprintf(stderr, "Error: Expected digit in opcode, but got '%c'\n", *ip);
+            exit(1);
+        }
+        buffer[i++] = *ip;
+        ip++;
+    }
+    buffer[i] = '\0';
+
+    if (i == 0) return -1; // コードの終端
+    
+    return atol(buffer);
+}
