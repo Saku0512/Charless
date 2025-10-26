@@ -140,15 +140,19 @@ int main(int argc, char *argv[]) {
         fprintf(out_file, "\n");
         fprintf(out_file, ".data\n");
         fprintf(out_file, "memory: .zero %d\n", MEMORY_SIZE * 8); // long = 8 bytes
+        fprintf(out_file, "input_buffer: .zero 1024\n");
         fprintf(out_file, "output_format: .asciz \"%%ld\\n\"\n");
         fprintf(out_file, "char_format: .asciz \"%%c\"\n");
+        fprintf(out_file, "input_format_num: .asciz \"%%ld\"\n");
+        fprintf(out_file, "input_format_str: .asciz \"%%s\"\n");
+        fprintf(out_file, "string_output_format: .asciz \"%%s\\n\"\n");
         fprintf(out_file, "\n");
         fprintf(out_file, ".text\n");
         fprintf(out_file, "main:\n");
         fprintf(out_file, "    push rbp\n");
         fprintf(out_file, "    mov rbp, rsp\n");
-        fprintf(out_file, "\n"
-);
+        fprintf(out_file, "\n\
+");
 
 
         while (1) {
@@ -210,6 +214,77 @@ int main(int argc, char *argv[]) {
                     fprintf(out_file, "    lea rdi, output_format[rip]\n");
                     fprintf(out_file, "    mov al, 0\n");
                     fprintf(out_file, "    call printf\n");
+                    break;
+
+                case 3: // PRINT_MEM_STRING
+                    if (!consume_separator()) {
+                        fprintf(stderr, "Error: Expected '20' after 03\n");
+                        exit(1);
+                    }
+                    fprintf(out_file, "    # PRINT_MEM_STRING\n");
+                    fprintf(out_file, "    pop rsi\n");
+                    fprintf(out_file, "    lea rdi, string_output_format[rip]\n");
+                    fprintf(out_file, "    mov al, 0\n");
+                    fprintf(out_file, "    call printf\n");
+                    break;
+
+                case 4: // PRINT_CHAR
+                    if (!consume_separator()) {
+                        fprintf(stderr, "Error: Expected '20' after 04\n");
+                        exit(1);
+                    }
+                    fprintf(out_file, "    # PRINT_CHAR\n");
+                    fprintf(out_file, "    pop rsi\n");
+                    fprintf(out_file, "    lea rdi, char_format[rip]\n");
+                    fprintf(out_file, "    mov al, 0\n");
+                    fprintf(out_file, "    call printf\n");
+                    break;
+
+                case 11: // INPUT_STRING_AND_PARSE
+                    if (!consume_separator()) {
+                        fprintf(stderr, "Error: Expected '20' after 11\n");
+                        exit(1);
+                    }
+                    fprintf(out_file, "    # INPUT_STRING_AND_PARSE\n");
+                    fprintf(out_file, "    # Step 1: Call scanf to get user input\n");
+                    fprintf(out_file, "    lea rsi, input_buffer[rip]\n");
+                    fprintf(out_file, "    lea rdi, input_format_str[rip]\n");
+                    fprintf(out_file, "    mov al, 0\n");
+                    fprintf(out_file, "    call scanf\n");
+                    fprintf(out_file, "    # Step 2: Parse the string from the buffer\n");
+                    fprintf(out_file, "    lea rdi, input_buffer[rip]\n");
+                    fprintf(out_file, "    xor rax, rax\n");
+                    fprintf(out_file, "    xor rbx, rbx\n");
+                    fprintf(out_file, "    mov bl, [rdi]\n");
+                    fprintf(out_file, "    sub bl, '0'\n");
+                    fprintf(out_file, "    inc rdi\n");
+                    fprintf(out_file, "    mov rcx, rbx\n");
+                    fprintf(out_file, "    cmp rcx, 0\n");
+                    fprintf(out_file, "    je .parse_loop_11_end\n");
+                    fprintf(out_file, ".parse_loop_11:\n");
+                    fprintf(out_file, "    movzx rdx, byte ptr [rdi]\n");
+                    fprintf(out_file, "    sub rdx, '0'\n");
+                    fprintf(out_file, "    imul rax, 10\n");
+                    fprintf(out_file, "    add rax, rdx\n");
+                    fprintf(out_file, "    inc rdi\n");
+                    fprintf(out_file, "    loop .parse_loop_11\n");
+                    fprintf(out_file, ".parse_loop_11_end:\n");
+                    fprintf(out_file, "    push rax\n");
+                    break;
+
+                case 12: // INPUT_NUM
+                    if (!consume_separator()) {
+                        fprintf(stderr, "Error: Expected '20' after 12\n");
+                        exit(1);
+                    }
+                    fprintf(out_file, "    # INPUT_NUM\n");
+                    fprintf(out_file, "    lea rsi, input_buffer[rip]\n");
+                    fprintf(out_file, "    lea rdi, input_format_num[rip]\n");
+                    fprintf(out_file, "    mov al, 0\n");
+                    fprintf(out_file, "    call scanf\n");
+                    fprintf(out_file, "    lea rbx, input_buffer[rip]\n");
+                    fprintf(out_file, "    mov rax, [rbx]\n");
+                    fprintf(out_file, "    push rax\n");
                     break;
 
                 case 51: // PUSH

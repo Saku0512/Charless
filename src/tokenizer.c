@@ -1,5 +1,6 @@
 #include "tokenizer.h"
 #include "vm.h"
+#include <ctype.h>
 
 // --- 字句解析 (トークナイザ) ---
 
@@ -44,6 +45,11 @@ long get_number_literal() {
 long get_opcode() {
     char buffer[64];
     int i = 0;
+
+    // Skip whitespace
+    while (isspace(*ip)) {
+        ip++;
+    }
 
     // '20' か '99' か終端が来るまで読み込む
     while (*ip != '\0' && strncmp(ip, "20", 2) != 0 && strncmp(ip, "99", 2) != 0) {
