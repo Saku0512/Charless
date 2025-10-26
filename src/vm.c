@@ -22,3 +22,42 @@ long pop() {
     }
     return stack[sp--];
 }
+
+// --- 算術演算 (スタックベース) ---
+void add_op() {
+    long b = pop();
+    long a = pop();
+    push(a + b);
+}
+
+void sub_op() {
+    long b = pop();
+    long a = pop();
+    push(a - b);
+}
+
+void mul_op() {
+    long b = pop();
+    long a = pop();
+    push(a * b);
+}
+
+void div_op() {
+    long b = pop();
+    if (b == 0) {
+        fprintf(stderr, "Error: Division by zero\n");
+        exit(1);
+    }
+    long a = pop();
+    push(a / b);
+}
+
+void mod_op() {
+    long b = pop();
+    if (b == 0) {
+        fprintf(stderr, "Error: Division by zero (mod)\n");
+        exit(1);
+    }
+    long a = pop();
+    push(a % b);
+}

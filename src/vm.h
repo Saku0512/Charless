@@ -17,4 +17,11 @@ extern char *ip;
 void push(long value);
 long pop();
 
+// Arithmetic operations (stack-based)
+void add_op();
+void sub_op();
+void mul_op();
+void div_op();
+void mod_op();
+
 #endif // VM_H

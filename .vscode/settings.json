@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "codegen.h": "c",
+        "vm.h": "c"
+    }
+}

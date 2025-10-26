@@ -1,5 +1,6 @@
 steps.txt
 src/*
 !src/*.*
+!src/codegen/
 cless_compiler
 test.cless
