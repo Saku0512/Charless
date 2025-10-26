@@ -10,6 +10,7 @@ void asm_header(FILE *out_file) {
     fprintf(out_file, ".data\n");
     fprintf(out_file, "memory: .zero %d\n", MEMORY_SIZE * 8); // long = 8 bytes
     fprintf(out_file, "input_buffer: .zero 1024\n");
+    fprintf(out_file, "string_build_buffer: .zero 1024\n");
     fprintf(out_file, "output_format: .asciz \"%%ld\\n\"\n");
     fprintf(out_file, "char_format: .asciz \"%%c\"\n");
     fprintf(out_file, "input_format_num: .asciz \"%%ld\"\n");

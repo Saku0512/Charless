@@ -4,3 +4,4 @@ src/*
 !src/codegen/
 cless_compiler
 test.cless
+examples
