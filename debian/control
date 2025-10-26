@@ -1,0 +1,13 @@
+Source: charless
+Section: devel
+Priority: optional
+Maintainer: Saku0512 <saku0512sec@gmail.com>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.6.2
+Homepage: https://github.com/Saku0512/charless
+
+Package: charless
+Architecture: any
+Depends: ${misc:Depends}
+Description: A short description of charless
+ A longer description of charless.

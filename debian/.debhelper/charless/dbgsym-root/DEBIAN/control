@@ -1,0 +1,12 @@
+Package: charless-dbgsym
+Source: charless
+Version: 0.1.0-1
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Saku0512 <saku0512sec@gmail.com>
+Installed-Size: 34
+Depends: charless (= 0.1.0-1)
+Section: debug
+Priority: optional
+Description: debug symbols for charless
+Build-Ids: b7dcd92f621bf2232720450af6a959ca69ecb53a

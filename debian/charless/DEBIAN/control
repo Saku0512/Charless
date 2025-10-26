@@ -1,0 +1,10 @@
+Package: charless
+Version: 0.1.0-1
+Architecture: amd64
+Maintainer: Saku0512 <saku0512sec@gmail.com>
+Installed-Size: 35
+Section: devel
+Priority: optional
+Homepage: https://github.com/Saku0512/charless
+Description: A short description of charless
+ A longer description of charless.
