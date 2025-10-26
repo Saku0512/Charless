@@ -2,3 +2,4 @@ steps.txt
 src/*
 !src/*.*
 cless_compiler
+test.cless
