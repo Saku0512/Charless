@@ -16,6 +16,7 @@ void asm_header(FILE *out_file) {
     fprintf(out_file, "input_format_num: .asciz \"%%ld\"\n");
     fprintf(out_file, "input_format_str: .asciz \"%%s\"\n");
     fprintf(out_file, "string_output_format: .asciz \"%%s\\n\"\n");
+    fprintf(out_file, "newline: .asciz \"\\n\"\n");
     fprintf(out_file, "\n");
     fprintf(out_file, ".text\n");
     fprintf(out_file, "main:\n");

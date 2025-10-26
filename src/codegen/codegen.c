@@ -14,6 +14,7 @@
 #include "opecodes/ope1x/ope11.h"
 #include "opecodes/ope1x/ope12.h"
 #include "opecodes/ope1x/ope13.h"
+#include "opecodes/ope2x/ope21.h"
 #include "opecodes/ope5x/ope51.h"
 #include "opecodes/ope5x/ope53.h"
 #include "opecodes/ope5x/ope54.h"
@@ -63,6 +64,10 @@ void generate_code(FILE *out_file, char *code) {
 
             case 13: // INPUT_STRING
                 opecode_13(out_file);
+                break;
+
+            case 21: // PRINT_NEWLINE
+                opecode_21(out_file);
                 break;
 
             case 51: // PUSH
