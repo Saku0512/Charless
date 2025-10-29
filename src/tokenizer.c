@@ -76,17 +76,30 @@ long get_opcode() {
         break; // No more whitespace or comments
     }
 
-    // '20' か '99' か終端が来るまで読み込む
-    while (*ip != '\0' && strncmp(ip, "20", 2) != 0 && strncmp(ip, "99", 2) != 0) {
-        if (!isdigit(*ip)) {
-            // コメントが不正に挿入されている場合はエラー
-            if (strncmp(ip, "9720", 4) == 0 || strncmp(ip, "9820", 4) == 0) {
+    // オペコードの数字部分を読み込む
+    while (*ip != '\0') {
+        // 先読みして、コメントの開始シーケンスかをチェック
+        if (strncmp(ip, "9720", 4) == 0 || strncmp(ip, "9820", 4) == 0) {
+            if (i > 0) {
+                // バッファに既に数字が入っているのにコメントが始まったらエラー
                 fprintf(stderr, "Error: Comments are not allowed within an instruction. Please remove the comment here.\n");
                 exit(1);
             }
-            // 数字でなければオペコードの終わりとみなす
+            // i == 0 の場合は、get_opcode冒頭のスキップループで処理されるべき。
+            // ここに到達するのは想定外だが、ループを抜けて後続に任せる。
             break;
         }
+
+        // セパレータか数値リテラルの開始ならオペコードの終わり
+        if (strncmp(ip, "20", 2) == 0 || strncmp(ip, "99", 2) == 0) {
+            break;
+        }
+
+        if (!isdigit(*ip)) {
+            // 数字でない文字（空白など）ならオペコードの終わり
+            break;
+        }
+
         buffer[i++] = *ip;
         ip++;
     }
