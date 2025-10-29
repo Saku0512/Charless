@@ -46,9 +46,34 @@ long get_opcode() {
     char buffer[64];
     int i = 0;
 
-    // Skip whitespace
-    while (isspace(*ip)) {
-        ip++;
+    // Skip whitespace and comments
+    while (1) {
+        while (isspace(*ip)) {
+            ip++;
+        }
+
+        // Single-line comment (9720)
+        if (strncmp(ip, "9720", 4) == 0) {
+            ip += 4;
+            while (*ip != '\0' && *ip != '\n') {
+                ip++;
+            }
+            continue; // Restart the loop to handle more whitespace or comments
+        }
+
+        // Multi-line comment (9820 ... 9820)
+        if (strncmp(ip, "9820", 4) == 0) {
+            ip += 4; // Consume the opening "9820"
+            while (*ip != '\0' && strncmp(ip, "9820", 4) != 0) {
+                ip++;
+            }
+            if (strncmp(ip, "9820", 4) == 0) {
+                ip += 4; // Consume the closing "9820"
+            }
+            continue; // Restart the loop
+        }
+        
+        break; // No more whitespace or comments
     }
 
     // '20' か '99' か終端が来るまで読み込む
