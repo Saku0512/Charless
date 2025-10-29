@@ -79,8 +79,13 @@ long get_opcode() {
     // '20' か '99' か終端が来るまで読み込む
     while (*ip != '\0' && strncmp(ip, "20", 2) != 0 && strncmp(ip, "99", 2) != 0) {
         if (!isdigit(*ip)) {
-            fprintf(stderr, "Error: Expected digit in opcode, but got '%c'\n", *ip);
-            exit(1);
+            // コメントが不正に挿入されている場合はエラー
+            if (strncmp(ip, "9720", 4) == 0 || strncmp(ip, "9820", 4) == 0) {
+                fprintf(stderr, "Error: Comments are not allowed within an instruction. Please remove the comment here.\n");
+                exit(1);
+            }
+            // 数字でなければオペコードの終わりとみなす
+            break;
         }
         buffer[i++] = *ip;
         ip++;
