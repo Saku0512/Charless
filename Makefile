@@ -7,7 +7,7 @@ OBJS_COMPILER = $(SRCS_COMPILER:.c=.o)
 
 TARGET_COMPILER = clessc
 
-.PHONY: all clean
+.PHONY: all clean test
 
 all: $(TARGET_COMPILER)
 
@@ -17,6 +17,17 @@ $(TARGET_COMPILER): $(OBJS_COMPILER)
 # Pattern rule to build .o from .c
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+# --- Test Target ---
+TEST_SRCS = tests/test_tokenizer.c src/tokenizer.c
+TEST_OBJS = $(TEST_SRCS:.c=.o)
+TEST_TARGET = test_tokenizer
+
+test: $(TEST_TARGET)
+	./$(TEST_TARGET)
+
+$(TEST_TARGET): $(TEST_OBJS)
+	$(CC) $(CFLAGS) -o $(TEST_TARGET) $(TEST_OBJS)
 
 clean:
 	rm -f src/*.o $(TARGET_COMPILER) *.s *.out
@@ -32,3 +43,4 @@ clean:
 	rm -f src/codegen/opecodes/ope7x/*.o ${TARGET_COMPILER} *.s *.out
 	rm -f src/codegen/opecodes/ope8x/*.o ${TARGET_COMPILER} *.s *.out
 	rm -f src/codegen/opecodes/ope9x/*.o ${TARGET_COMPILER} *.s *.out
+	rm -f tests/*.o $(TEST_TARGET)
