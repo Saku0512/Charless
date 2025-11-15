@@ -23,13 +23,65 @@
 #include "opecodes/ope6x/ope63.h"
 #include "opecodes/ope6x/ope64.h"
 #include "opecodes/ope6x/ope65.h"
+#include "opecodes/ope7x/ope71.h"
+#include "opecodes/ope7x/ope72.h"
+#include "opecodes/ope7x/ope73.h"
+#include "opecodes/ope8x/ope82.h"
+#include "opecodes/ope8x/ope83.h"
+#include "opecodes/ope8x/ope84.h"
+#include "opecodes/ope8x/ope85.h"
+#include "opecodes/ope8x/ope86.h"
 
 void generate_code(FILE *out_file, char *code) {
-    ip = code;
+    // --- Pass 1: Find all jump targets ---
+    long *jump_targets = NULL;
+    int targets_count = 0;
+    char *scanner = code;
+    while (*scanner != '\0') {
+        if ((strncmp(scanner, "712099", 6) == 0) ||
+            (strncmp(scanner, "722099", 6) == 0) ||
+            (strncmp(scanner, "732099", 6) == 0))
+        {
+            char *num_start = scanner + 6; // Move past "XX2099"
+            char *num_end = strstr(num_start, "20");
+            if (num_end) {
+                char addr_buf[20];
+                long len = num_end - num_start;
+                if (len > 0 && len < 20) {
+                    strncpy(addr_buf, num_start, len);
+                    addr_buf[len] = '\0';
+                    long addr = atol(addr_buf);
 
+                    // Add to jump_targets, avoiding duplicates
+                    int found = 0;
+                    for (int i = 0; i < targets_count; i++) {
+                        if (jump_targets[i] == addr) {
+                            found = 1;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        jump_targets = realloc(jump_targets, (targets_count + 1) * sizeof(long));
+                        jump_targets[targets_count++] = addr;
+                    }
+                }
+            }
+        }
+        scanner++;
+    }
+
+    // --- Pass 2: Generate Code ---
+    ip = code;
     asm_header(out_file);
 
     while (1) {
+        long current_pos = ip - code;
+        for (int i = 0; i < targets_count; i++) {
+            if (jump_targets[i] == current_pos) {
+                fprintf(out_file, "L%ld:\n", current_pos);
+            }
+        }
+
         long opcode = get_opcode();
         if (opcode == -1) break;
 
@@ -102,6 +154,32 @@ void generate_code(FILE *out_file, char *code) {
                 opecode_65(out_file);
                 break;
 
+            case 71: // JUMP
+                opecode_71(out_file);
+                break;
+            case 72: // JZ
+                opecode_72(out_file);
+                break;
+            case 73: // JNZ
+                opecode_73(out_file);
+                break;
+            
+            case 82: // EQN
+                opecode_82(out_file);
+                break;
+            case 83: // GT
+                opecode_83(out_file);
+                break;
+            case 84: // LT
+                opecode_84(out_file);
+                break;
+            case 85: // GTE
+                opecode_85(out_file);
+                break;
+            case 86: // LTE
+                opecode_86(out_file);
+                break;
+
             default:
                 fprintf(stderr, "Error: Unknown opcode %ld\n", opcode);
                 exit(1);
@@ -114,4 +192,6 @@ void generate_code(FILE *out_file, char *code) {
     fprintf(out_file, "    mov rsp, rbp\n");
     fprintf(out_file, "    pop rbp\n");
     fprintf(out_file, "    ret\n");
+    
+    free(jump_targets);
 }
