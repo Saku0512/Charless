@@ -6,11 +6,7 @@
 #include "../src/tokenizer.h"
 #include "../src/vm.h"
 
-// Define global variables declared in vm.h for the test
-long stack[STACK_SIZE];
-int sp = 0;
-long memory[MEMORY_SIZE];
-char *ip;
+// Global variables are defined in vm.c, we just use them via extern declarations in vm.h
 
 // --- Test Utilities ---
 void setup_ip(const char* source) {

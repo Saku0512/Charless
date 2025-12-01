@@ -4,9 +4,9 @@ Version: 0.0.1
 Auto-Built-Package: debug-symbols
 Architecture: amd64
 Maintainer: Saku0512 <saku0512sec@gmail.com>
-Installed-Size: 34
+Installed-Size: 37
 Depends: charless (= 0.0.1)
 Section: debug
 Priority: optional
 Description: debug symbols for charless
-Build-Ids: b7dcd92f621bf2232720450af6a959ca69ecb53a
+Build-Ids: e954e9be0f4aab4ee866cbf868cd70729ba198e1

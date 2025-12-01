@@ -2,7 +2,7 @@ Package: charless
 Version: 0.0.1
 Architecture: amd64
 Maintainer: Saku0512 <saku0512sec@gmail.com>
-Installed-Size: 35
+Installed-Size: 43
 Section: devel
 Priority: optional
 Homepage: https://github.com/Saku0512/charless
