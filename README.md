@@ -40,3 +40,67 @@ $ clessc hello.cless
 $ ./cless.out
 Hello, world!
 ```
+
+## Debianパッケージの署名確認
+
+CharlessのDebianパッケージ（`.deb`ファイル）はGPG署名されています。ダウンロードしたパッケージの署名を確認するには、以下の手順を実行してください。
+
+### 1. 公開鍵のインポート
+
+リポジトリに含まれている公開鍵ファイルをインポートします：
+
+```bash
+# 公開鍵をインポート
+gpg --import gpg-public-key.asc
+
+# または、GitHubから直接インポート
+curl -s https://raw.githubusercontent.com/Saku0512/Charless/main/gpg-public-key.asc | gpg --import
+```
+
+### 2. 公開鍵の信頼設定（オプション）
+
+```bash
+# キーIDを確認
+gpg --list-keys --keyid-format LONG | grep "Charless GPG Key"
+
+# キーに署名して信頼する（推奨）
+gpg --edit-key B9B12A48239B3B49
+# コマンドプロンプトで "trust" と入力し、信頼レベルを選択
+```
+
+### 3. パッケージの署名確認
+
+#### `.changes`ファイルから確認（推奨）
+
+```bash
+# .changesファイルの署名を確認
+dpkg-sig --verify charless_*.changes
+
+# または、GPGで直接確認
+gpg --verify charless_*.changes
+```
+
+#### `.deb`ファイルから確認
+
+```bash
+# .debファイルの署名を確認
+dpkg-sig --verify charless_*.deb
+
+# または、debsigsで確認（debsigsパッケージが必要）
+debsigs --verify charless_*.deb
+```
+
+### 4. 署名確認の結果
+
+正常な場合、以下のようなメッセージが表示されます：
+
+```
+Good signature from "Saku0512 (Charless GPG Key) <saku0512sec@gmail.com>"
+```
+
+### GPGキー情報
+
+- **キーID**: `B9B12A48239B3B49`
+- **フルキーID**: `9D4CA3816FE631A99BF69E0BB9B12A48239B3B49`
+- **メールアドレス**: saku0512sec@gmail.com
+- **公開鍵ファイル**: `gpg-public-key.asc`
