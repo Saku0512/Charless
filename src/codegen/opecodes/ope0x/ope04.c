@@ -5,7 +5,7 @@
 
 void opecode_04(FILE *out_file){
     if (!consume_separator()) {
-        fprintf(stderr, "Error: Expected '20' after 04\n");
+        fprintf(stderr, "Error: Expected '200' after 040\n");
         exit(1);
     }
     fprintf(out_file, "    # PRINT_CHAR\n");

@@ -6,7 +6,7 @@
 
 void opecode_65(FILE *out_file) {
     if (!consume_separator()) {
-        fprintf(stderr, "Error: Expected '20' after 65\n");
+        fprintf(stderr, "Error: Expected '200' after 604\n");
         exit(1);
     }
     fprintf(out_file, "    # MOD\n");

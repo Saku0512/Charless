@@ -8,12 +8,12 @@
 
 void opecode_01(FILE *out_file){
     if (!consume_separator()) {
-        fprintf(stderr, "Error: Expected '20' after 01\n");
+        fprintf(stderr, "Error: Expected '200' after 010\n");
         exit(1);
     }
     fprintf(out_file, "    # PRINT_STRING\n");
 
-    while (strncmp(ip, "20", 2) != 0 && *ip != '\0') {
+    while (strncmp(ip, "200", 3) != 0 && *ip != '\0') {
         char len_str[2] = {*ip, '\0'};
         ip++;
         int len = atoi(len_str);
@@ -38,7 +38,7 @@ void opecode_01(FILE *out_file){
     }
 
     if (!consume_separator()) {
-        fprintf(stderr, "Error: Expected '20' after string data\n");
+        fprintf(stderr, "Error: Expected '200' after string data\n");
         exit(1);
     }
 }

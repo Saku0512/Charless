@@ -38,12 +38,12 @@ void generate_code(FILE *out_file, char *code) {
     int targets_count = 0;
     char *scanner = code;
     while (*scanner != '\0') {
-        if ((strncmp(scanner, "712099", 6) == 0) ||
-            (strncmp(scanner, "722099", 6) == 0) ||
-            (strncmp(scanner, "732099", 6) == 0))
+        if ((strncmp(scanner, "70020990", 8) == 0) ||
+            (strncmp(scanner, "70120990", 8) == 0) ||
+            (strncmp(scanner, "70220990", 8) == 0))
         {
-            char *num_start = scanner + 6; // Move past "XX2099"
-            char *num_end = strstr(num_start, "20");
+            char *num_start = scanner + 8; // Move past "XXX20990"
+            char *num_end = strstr(num_start, "200");
             if (num_end) {
                 char addr_buf[20];
                 long len = num_end - num_start;
@@ -86,97 +86,102 @@ void generate_code(FILE *out_file, char *code) {
         if (opcode == -1) break;
 
         switch (opcode) {
-            case 00: // HALT
+            case 0: // HALT (000 in v3, but parsed as 0)
                 opecode_00(out_file);
                 break;
             
-            case 01: // PRINT_STRING
+            case 10: // PRINT_STRING (010 in v3, but parsed as 10)
                 opecode_01(out_file);
                 break;
             
-            case 02: // PRINT
+            case 20: // PRINT (020 in v3, but parsed as 20)
                 opecode_02(out_file);
                 break;
 
-            case 3: // PRINT_MEM_STRING
+            case 30: // PRINT_MEM_STRING (030 in v3, but parsed as 30)
                 opecode_03(out_file);
                 break;
 
-            case 4: // PRINT_CHAR
+            case 40: // PRINT_CHAR (040 in v3, but parsed as 40)
                 opecode_04(out_file);
                 break;
 
-            case 11: // INPUT_STRING_AND_PARSE
+            case 100: // INPUT_CHAR (v3, 旧11)
                 opecode_11(out_file);
                 break;
 
-            case 12: // INPUT_NUM
+            case 101: // INPUT_NUM (v3, 旧12)
                 opecode_12(out_file);
                 break;
 
-            case 13: // INPUT_STRING
+            case 102: // INPUT_STRING (v3, 旧13)
                 opecode_13(out_file);
                 break;
 
-            case 21: // PRINT_NEWLINE
+            case 210: // PRINT_NEWLINE (v3, 旧21)
                 opecode_21(out_file);
                 break;
 
-            case 51: // PUSH
+            case 500: // PUSH (v3, 旧51)
                 opecode_51(out_file);
                 break;
 
-            case 53: // STORE
+            case 510: // STORE (v3, 旧53)
                 opecode_53(out_file);
                 break;
 
-            case 54: // LOAD
+            case 511: // LOAD (v3, 旧54)
                 opecode_54(out_file);
                 break;
 
-            case 61: // ADD
+            case 600: // ADD (v3, 旧61)
                 opecode_61(out_file);
                 break;
 
-            case 62: // SUB
+            case 601: // SUB (v3, 旧62)
                 opecode_62(out_file);
                 break;
 
-            case 63: // MUL
+            case 602: // MUL (v3, 旧63)
                 opecode_63(out_file);
                 break;
 
-            case 64: // DIV
+            case 603: // DIV (v3, 旧64)
                 opecode_64(out_file);
                 break;
 
-            case 65: // MOD
+            case 604: // MOD (v3, 旧65)
                 opecode_65(out_file);
                 break;
 
-            case 71: // JUMP
+            case 700: // JUMP (v3, 旧71)
                 opecode_71(out_file);
                 break;
-            case 72: // JZ
+            case 701: // JZ (v3, 旧72)
                 opecode_72(out_file);
                 break;
-            case 73: // JNZ
+            case 702: // JNZ (v3, 旧73)
                 opecode_73(out_file);
                 break;
             
-            case 82: // EQN
+            case 800: // EQS (v3, 旧81) - 未実装の可能性あり
+                // opecode_81(out_file); // 実装されていない場合はコメントアウト
+                fprintf(stderr, "Error: EQS (800) is not yet implemented\n");
+                exit(1);
+                break;
+            case 801: // EQN (v3, 旧82)
                 opecode_82(out_file);
                 break;
-            case 83: // GT
+            case 802: // GT (v3, 旧83)
                 opecode_83(out_file);
                 break;
-            case 84: // LT
+            case 803: // LT (v3, 旧84)
                 opecode_84(out_file);
                 break;
-            case 85: // GTE
+            case 804: // GTE (v3, 旧85)
                 opecode_85(out_file);
                 break;
-            case 86: // LTE
+            case 805: // LTE (v3, 旧86)
                 opecode_86(out_file);
                 break;
 

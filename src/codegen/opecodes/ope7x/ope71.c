@@ -7,11 +7,11 @@
 
 void opecode_71(FILE *out_file) {
     if (!consume_separator()) {
-        fprintf(stderr, "Error: Expected '20' after 71\n");
+        fprintf(stderr, "Error: Expected '200' after 700\n");
         exit(1);
     }
-    if (strncmp(ip, "99", 2) == 0) {
-        ip += 2;
+    if (strncmp(ip, "990", 3) == 0) {
+        ip += 3;
     }
     long address = get_number_literal();
     fprintf(out_file, "    # JUMP to %ld\n", address);
