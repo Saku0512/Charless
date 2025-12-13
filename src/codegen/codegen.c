@@ -118,7 +118,7 @@ void generate_code(FILE *out_file, char *code) {
                 opecode_13(out_file);
                 break;
 
-            case 21: // PRINT_NEWLINE
+            case 210: // PRINT_NEWLINE (v3, 旧21)
                 opecode_21(out_file);
                 break;
 
