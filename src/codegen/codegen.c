@@ -38,11 +38,11 @@ void generate_code(FILE *out_file, char *code) {
     int targets_count = 0;
     char *scanner = code;
     while (*scanner != '\0') {
-        if ((strncmp(scanner, "712099", 6) == 0) ||
-            (strncmp(scanner, "722099", 6) == 0) ||
-            (strncmp(scanner, "732099", 6) == 0))
+        if ((strncmp(scanner, "7002099", 7) == 0) ||
+            (strncmp(scanner, "7012099", 7) == 0) ||
+            (strncmp(scanner, "7022099", 7) == 0))
         {
-            char *num_start = scanner + 6; // Move past "XX2099"
+            char *num_start = scanner + 7; // Move past "XXX2099"
             char *num_end = strstr(num_start, "20");
             if (num_end) {
                 char addr_buf[20];
@@ -154,13 +154,13 @@ void generate_code(FILE *out_file, char *code) {
                 opecode_65(out_file);
                 break;
 
-            case 71: // JUMP
+            case 700: // JUMP (v3, 旧71)
                 opecode_71(out_file);
                 break;
-            case 72: // JZ
+            case 701: // JZ (v3, 旧72)
                 opecode_72(out_file);
                 break;
-            case 73: // JNZ
+            case 702: // JNZ (v3, 旧73)
                 opecode_73(out_file);
                 break;
             

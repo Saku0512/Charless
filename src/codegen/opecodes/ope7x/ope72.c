@@ -7,7 +7,7 @@
 
 void opecode_72(FILE *out_file) {
     if (!consume_separator()) {
-        fprintf(stderr, "Error: Expected '20' after 72\n");
+        fprintf(stderr, "Error: Expected '20' after 701\n");
         exit(1);
     }
     if (strncmp(ip, "99", 2) == 0) {
