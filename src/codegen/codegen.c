@@ -189,6 +189,7 @@ void generate_code(FILE *out_file, char *code) {
 
     // --- Assembly Footer ---
     fprintf(out_file, "    # Implicit HALT\n");
+    fprintf(out_file, "    mov rax, 0\n");
     fprintf(out_file, "    mov rsp, rbp\n");
     fprintf(out_file, "    pop rbp\n");
     fprintf(out_file, "    ret\n");
