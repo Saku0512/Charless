@@ -5,7 +5,7 @@
 
 void opecode_82(FILE *out_file) {
     if (!consume_separator()) {
-        fprintf(stderr, "Error: Expected '20' after 801\n");
+        fprintf(stderr, "Error: Expected '200' after 801\n");
         exit(1);
     }
     fprintf(out_file, "    # EQN (Not Equal Number)\n");

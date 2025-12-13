@@ -4,24 +4,24 @@
 
 // --- 字句解析 (トークナイザ) ---
 
-// '20' セパレータを消費する
+// '200' セパレータを消費する (v3)
 // セパレータがあれば 1 を、なければ 0 を返す
 int consume_separator() {
-    if (strncmp(ip, "20", 2) == 0) {
-        ip += 2; // ポインタを2文字進める
+    if (strncmp(ip, "200", 3) == 0) {
+        ip += 3; // ポインタを3文字進める
         return 1;
     }
     return 0;
 }
 
-// '99' の後の数値リテラルを読み込む
+// '990' の後の数値リテラルを読み込む (v3)
 // (仕様 4. に基づく)
 long get_number_literal() {
     char buffer[64]; // 数値を一時的に格納
     int i = 0;
 
-    // '20' が来るまで数字を読み込む
-    while (*ip != '\0' && strncmp(ip, "20", 2) != 0) {
+    // '200' が来るまで数字を読み込む
+    while (*ip != '\0' && strncmp(ip, "200", 3) != 0) {
         if (!isdigit(*ip)) {
             fprintf(stderr, "Error: Expected digit in number literal, but got '%c'\n", *ip);
             exit(1);
@@ -31,9 +31,9 @@ long get_number_literal() {
     }
     buffer[i] = '\0';
 
-    // 末尾の '20' を消費する
+    // 末尾の '200' を消費する
     if (!consume_separator()) {
-        fprintf(stderr, "Error: Expected '20' after number literal\n");
+        fprintf(stderr, "Error: Expected '200' after number literal\n");
         exit(1);
     }
 
@@ -113,7 +113,7 @@ long get_opcode() {
         }
 
         // セパレータか数値リテラルの開始ならオペコードの終わり
-        if (strncmp(ip, "20", 2) == 0 || strncmp(ip, "99", 2) == 0) {
+        if (strncmp(ip, "200", 3) == 0 || strncmp(ip, "990", 3) == 0) {
             break;
         }
 

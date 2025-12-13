@@ -8,17 +8,17 @@
 
 void opecode_51(FILE *out_file){
     if (!consume_separator()) {
-        fprintf(stderr, "Error: Expected '20' after 500\n");
+        fprintf(stderr, "Error: Expected '200' after 500\n");
         exit(1);
     }
-    if (strncmp(ip, "99", 2) == 0) {
-        ip += 2;
+    if (strncmp(ip, "990", 3) == 0) {
+        ip += 3;
         long val = get_number_literal();
         fprintf(out_file, "    # PUSH %ld\n", val);
         fprintf(out_file, "    mov rax, %ld\n", val);
         fprintf(out_file, "    push rax\n");
     } else {
-        fprintf(stderr, "Error: PUSH (500) requires '99' prefix\n");
+        fprintf(stderr, "Error: PUSH (500) requires '990' prefix\n");
         exit(1);
     }
 }

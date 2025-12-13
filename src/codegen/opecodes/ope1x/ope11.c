@@ -7,7 +7,7 @@
 
 void opecode_11(FILE *out_file){
     if (!consume_separator()) {
-        fprintf(stderr, "Error: Expected '20' after 100\n");
+        fprintf(stderr, "Error: Expected '200' after 100\n");
         exit(1);
     }
     fprintf(out_file, "    # INPUT_STRING_AND_PARSE\n");

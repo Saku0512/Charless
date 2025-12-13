@@ -38,12 +38,12 @@ void generate_code(FILE *out_file, char *code) {
     int targets_count = 0;
     char *scanner = code;
     while (*scanner != '\0') {
-        if ((strncmp(scanner, "7002099", 7) == 0) ||
-            (strncmp(scanner, "7012099", 7) == 0) ||
-            (strncmp(scanner, "7022099", 7) == 0))
+        if ((strncmp(scanner, "70020990", 8) == 0) ||
+            (strncmp(scanner, "70120990", 8) == 0) ||
+            (strncmp(scanner, "70220990", 8) == 0))
         {
-            char *num_start = scanner + 7; // Move past "XXX2099"
-            char *num_end = strstr(num_start, "20");
+            char *num_start = scanner + 8; // Move past "XXX20990"
+            char *num_end = strstr(num_start, "200");
             if (num_end) {
                 char addr_buf[20];
                 long len = num_end - num_start;
