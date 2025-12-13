@@ -106,15 +106,15 @@ void generate_code(FILE *out_file, char *code) {
                 opecode_04(out_file);
                 break;
 
-            case 11: // INPUT_STRING_AND_PARSE
+            case 100: // INPUT_CHAR (v3, 旧11)
                 opecode_11(out_file);
                 break;
 
-            case 12: // INPUT_NUM
+            case 101: // INPUT_NUM (v3, 旧12)
                 opecode_12(out_file);
                 break;
 
-            case 13: // INPUT_STRING
+            case 102: // INPUT_STRING (v3, 旧13)
                 opecode_13(out_file);
                 break;
 
