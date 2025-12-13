@@ -1,12 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "ope72.h"
 #include "../../../tokenizer.h"
+#include "../../../vm.h"
 
 void opecode_72(FILE *out_file) {
     if (!consume_separator()) {
         fprintf(stderr, "Error: Expected '20' after 72\n");
         exit(1);
+    }
+    if (strncmp(ip, "99", 2) == 0) {
+        ip += 2;
     }
     long address = get_number_literal();
     fprintf(out_file, "    # JZ to %ld\n", address);
