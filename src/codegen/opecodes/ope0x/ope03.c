@@ -5,7 +5,7 @@
 
 void opecode_03(FILE *out_file){
     if (!consume_separator()) {
-        fprintf(stderr, "Error: Expected '20' after 03\n");
+        fprintf(stderr, "Error: Expected '20' after 030\n");
         exit(1);
     }
     fprintf(out_file, "    # PRINT_MEM_STRING\n");

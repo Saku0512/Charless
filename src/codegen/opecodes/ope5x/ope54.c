@@ -8,7 +8,7 @@
 
 void opecode_54(FILE *out_file) {
     if (!consume_separator()) {
-        fprintf(stderr, "Error: Expected '20' after 54\n");
+        fprintf(stderr, "Error: Expected '20' after 511\n");
         exit(1);
     }
     if (strncmp(ip, "99", 2) == 0) {
@@ -19,7 +19,7 @@ void opecode_54(FILE *out_file) {
         fprintf(out_file, "    mov rax, [rbx + %ld]\n", var_id * 8);
         fprintf(out_file, "    push rax\n");
     } else {
-        fprintf(stderr, "Error: LOAD (54) requires '99' prefix\n");
+        fprintf(stderr, "Error: LOAD (511) requires '99' prefix\n");
         exit(1);
     }
 }

@@ -8,7 +8,7 @@
 
 void opecode_53(FILE *out_file) {
     if (!consume_separator()) {
-        fprintf(stderr, "Error: Expected '20' after 53\n");
+        fprintf(stderr, "Error: Expected '20' after 510\n");
         exit(1);
     }
     if (strncmp(ip, "99", 2) == 0) {
@@ -19,7 +19,7 @@ void opecode_53(FILE *out_file) {
         fprintf(out_file, "    lea rbx, memory[rip]\n");
         fprintf(out_file, "    mov [rbx + %ld], rax\n", var_id * 8);
     } else {
-        fprintf(stderr, "Error: STORE (53) requires '99' prefix\n");
+        fprintf(stderr, "Error: STORE (510) requires '99' prefix\n");
         exit(1);
     }
 }

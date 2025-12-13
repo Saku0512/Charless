@@ -122,15 +122,15 @@ void generate_code(FILE *out_file, char *code) {
                 opecode_21(out_file);
                 break;
 
-            case 51: // PUSH
+            case 500: // PUSH (v3, 旧51)
                 opecode_51(out_file);
                 break;
 
-            case 53: // STORE
+            case 510: // STORE (v3, 旧53)
                 opecode_53(out_file);
                 break;
 
-            case 54: // LOAD
+            case 511: // LOAD (v3, 旧54)
                 opecode_54(out_file);
                 break;
 

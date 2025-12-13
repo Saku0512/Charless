@@ -8,7 +8,7 @@
 
 void opecode_51(FILE *out_file){
     if (!consume_separator()) {
-        fprintf(stderr, "Error: Expected '20' after 51\n");
+        fprintf(stderr, "Error: Expected '20' after 500\n");
         exit(1);
     }
     if (strncmp(ip, "99", 2) == 0) {
@@ -18,7 +18,7 @@ void opecode_51(FILE *out_file){
         fprintf(out_file, "    mov rax, %ld\n", val);
         fprintf(out_file, "    push rax\n");
     } else {
-        fprintf(stderr, "Error: PUSH (51) requires '99' prefix\n");
+        fprintf(stderr, "Error: PUSH (500) requires '99' prefix\n");
         exit(1);
     }
 }
