@@ -5,7 +5,7 @@
 
 void opecode_86(FILE *out_file) {
     if (!consume_separator()) {
-        fprintf(stderr, "Error: Expected '20' after 86\n");
+        fprintf(stderr, "Error: Expected '20' after 805\n");
         exit(1);
     }
     fprintf(out_file, "    # LTE (Less Than or Equal)\n");

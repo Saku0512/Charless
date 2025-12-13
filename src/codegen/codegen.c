@@ -164,19 +164,24 @@ void generate_code(FILE *out_file, char *code) {
                 opecode_73(out_file);
                 break;
             
-            case 82: // EQN
+            case 800: // EQS (v3, 旧81) - 未実装の可能性あり
+                // opecode_81(out_file); // 実装されていない場合はコメントアウト
+                fprintf(stderr, "Error: EQS (800) is not yet implemented\n");
+                exit(1);
+                break;
+            case 801: // EQN (v3, 旧82)
                 opecode_82(out_file);
                 break;
-            case 83: // GT
+            case 802: // GT (v3, 旧83)
                 opecode_83(out_file);
                 break;
-            case 84: // LT
+            case 803: // LT (v3, 旧84)
                 opecode_84(out_file);
                 break;
-            case 85: // GTE
+            case 804: // GTE (v3, 旧85)
                 opecode_85(out_file);
                 break;
-            case 86: // LTE
+            case 805: // LTE (v3, 旧86)
                 opecode_86(out_file);
                 break;
 
