@@ -7,7 +7,7 @@
 
 void opecode_61(FILE *out_file) {
     if (!consume_separator()) {
-        fprintf(stderr, "Error: Expected '20' after 61\n");
+        fprintf(stderr, "Error: Expected '20' after 600\n");
         exit(1);
     }
     fprintf(out_file, "    # ADD\n");

@@ -134,23 +134,23 @@ void generate_code(FILE *out_file, char *code) {
                 opecode_54(out_file);
                 break;
 
-            case 61: // ADD
+            case 600: // ADD (v3, 旧61)
                 opecode_61(out_file);
                 break;
 
-            case 62: // SUB
+            case 601: // SUB (v3, 旧62)
                 opecode_62(out_file);
                 break;
 
-            case 63: // MUL
+            case 602: // MUL (v3, 旧63)
                 opecode_63(out_file);
                 break;
 
-            case 64: // DIV
+            case 603: // DIV (v3, 旧64)
                 opecode_64(out_file);
                 break;
 
-            case 65: // MOD
+            case 604: // MOD (v3, 旧65)
                 opecode_65(out_file);
                 break;
 
