@@ -86,23 +86,23 @@ void generate_code(FILE *out_file, char *code) {
         if (opcode == -1) break;
 
         switch (opcode) {
-            case 00: // HALT
+            case 0: // HALT (000 in v3, but parsed as 0)
                 opecode_00(out_file);
                 break;
             
-            case 01: // PRINT_STRING
+            case 10: // PRINT_STRING (010 in v3, but parsed as 10)
                 opecode_01(out_file);
                 break;
             
-            case 02: // PRINT
+            case 20: // PRINT (020 in v3, but parsed as 20)
                 opecode_02(out_file);
                 break;
 
-            case 3: // PRINT_MEM_STRING
+            case 30: // PRINT_MEM_STRING (030 in v3, but parsed as 30)
                 opecode_03(out_file);
                 break;
 
-            case 4: // PRINT_CHAR
+            case 40: // PRINT_CHAR (040 in v3, but parsed as 40)
                 opecode_04(out_file);
                 break;
 

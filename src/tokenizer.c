@@ -52,34 +52,56 @@ long get_opcode() {
             ip++;
         }
 
-        // Single-line comment (9720)
-        if (strncmp(ip, "9720", 4) == 0) {
-            ip += 4;
+        // Single-line comment (90020) - v3
+        if (strncmp(ip, "90020", 5) == 0) {
+            ip += 5;
             while (*ip != '\0' && *ip != '\n') {
                 ip++;
             }
             continue; // Restart the loop to handle more whitespace or comments
         }
 
-        // Multi-line comment (9820 ... 9820)
+        // Multi-line comment (90120 ... 90120) - v3
+        if (strncmp(ip, "90120", 5) == 0) {
+            ip += 5; // Consume the opening "90120"
+            while (*ip != '\0' && strncmp(ip, "90120", 5) != 0) {
+                ip++;
+            }
+            if (strncmp(ip, "90120", 5) == 0) {
+                ip += 5; // Consume the closing "90120"
+            }
+            continue; // Restart the loop
+        }
+        
+        // Legacy 2-digit comments (deprecated, show warning)
+        if (strncmp(ip, "9720", 4) == 0) {
+            fprintf(stderr, "Warning: 2-digit comment (97) is deprecated. Use 90020 instead.\n");
+            ip += 4;
+            while (*ip != '\0' && *ip != '\n') {
+                ip++;
+            }
+            continue;
+        }
         if (strncmp(ip, "9820", 4) == 0) {
-            ip += 4; // Consume the opening "9820"
+            fprintf(stderr, "Warning: 2-digit comment (98) is deprecated. Use 90120 instead.\n");
+            ip += 4;
             while (*ip != '\0' && strncmp(ip, "9820", 4) != 0) {
                 ip++;
             }
             if (strncmp(ip, "9820", 4) == 0) {
-                ip += 4; // Consume the closing "9820"
+                ip += 4;
             }
-            continue; // Restart the loop
+            continue;
         }
         
         break; // No more whitespace or comments
     }
 
-    // オペコードの数字部分を読み込む
-    while (*ip != '\0') {
+    // オペコードの数字部分を読み込む（3桁固定）
+    // v3では命令は必ず3桁
+    while (*ip != '\0' && i < 3) {
         // 先読みして、コメントの開始シーケンスかをチェック
-        if (strncmp(ip, "9720", 4) == 0 || strncmp(ip, "9820", 4) == 0) {
+        if (strncmp(ip, "90020", 5) == 0 || strncmp(ip, "90120", 5) == 0) {
             if (i > 0) {
                 // バッファに既に数字が入っているのにコメントが始まったらエラー
                 fprintf(stderr, "Error: Comments are not allowed within an instruction. Please remove the comment here.\n");
@@ -106,6 +128,18 @@ long get_opcode() {
     buffer[i] = '\0';
 
     if (i == 0) return -1; // コードの終端
+    
+    // v3: 命令は必ず3桁でなければならない
+    if (i < 3) {
+        fprintf(stderr, "Error: Opcode must be 3 digits (v3). Found %d-digit opcode: %s\n", i, buffer);
+        fprintf(stderr, "Please use 3-digit opcodes (e.g., 000, 010, 020, etc.)\n");
+        exit(1);
+    }
+    
+    if (i > 3) {
+        fprintf(stderr, "Error: Opcode must be exactly 3 digits. Found %d-digit opcode: %s\n", i, buffer);
+        exit(1);
+    }
     
     return atol(buffer);
 }

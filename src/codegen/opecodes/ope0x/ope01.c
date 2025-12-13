@@ -8,7 +8,7 @@
 
 void opecode_01(FILE *out_file){
     if (!consume_separator()) {
-        fprintf(stderr, "Error: Expected '20' after 01\n");
+        fprintf(stderr, "Error: Expected '20' after 010\n");
         exit(1);
     }
     fprintf(out_file, "    # PRINT_STRING\n");
