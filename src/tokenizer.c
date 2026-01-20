@@ -22,8 +22,12 @@ long get_number_literal() {
 
     // '200' が来るまで数字を読み込む
     while (*ip != '\0' && strncmp(ip, "200", 3) != 0) {
-        if (!isdigit(*ip)) {
+        if (!isdigit((unsigned char)*ip)) {
             fprintf(stderr, "Error: Expected digit in number literal, but got '%c'\n", *ip);
+            exit(1);
+        }
+        if (i >= 63) {
+            fprintf(stderr, "Error: Number literal too long (max 63 digits)\n");
             exit(1);
         }
         buffer[i++] = *ip;

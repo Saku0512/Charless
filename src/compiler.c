@@ -75,12 +75,10 @@ int main(int argc, char *argv[]) {
         char *dot = strrchr(base, '.');
         if (dot != NULL) {
             size_t len = dot - base;
-            strncpy(asm_filename, base, len);
-            asm_filename[len] = '\0';
+            snprintf(asm_filename, sizeof(asm_filename), "%.*s.s", (int)len, base);
         } else {
-            strncpy(asm_filename, base, sizeof(asm_filename) - 1);
+            snprintf(asm_filename, sizeof(asm_filename), "%s.s", base);
         }
-        strcat(asm_filename, ".s");
 
         FILE *out_file = fopen(asm_filename, "w");
         if (out_file == NULL) {
